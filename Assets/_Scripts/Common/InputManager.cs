@@ -5,10 +5,10 @@ using System;
 
 public class InputManager : MonoBehaviour
 {
-    private static InputManager Instance;
+    private static InputManager s_instance;
 
-    public static Vector2 TouchPosition { get { return Instance.m_touchPosition; } }
-    public static bool IsDragging { get { return Instance.m_isDragging; } }
+    public static Vector2 TouchPosition { get { return s_instance.m_touchPosition; } }
+    public static bool IsDragging { get { return s_instance.m_isDragging; } }
 
     public Action m_onTouchStart, m_onTouchEnd;
 
@@ -17,11 +17,11 @@ public class InputManager : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
+        s_instance = this;
     }
     private void OnDestroy()
     {
-        Instance = null;
+        s_instance = null;
     }
 
     private void Update()
@@ -66,31 +66,31 @@ public class InputManager : MonoBehaviour
 
     public static void AddTouchStartCallback(Action a_callbackToAdd)
     {
-        if (Instance != null)
+        if (s_instance != null)
         {
-            Instance.m_onTouchStart += a_callbackToAdd;
+            s_instance.m_onTouchStart += a_callbackToAdd;
         }
     }
     public static void RemoveTouchStartCallback(Action a_callbackToRemove)
     {
-        if (Instance != null)
+        if (s_instance != null)
         {
-            Instance.m_onTouchStart -= a_callbackToRemove;
+            s_instance.m_onTouchStart -= a_callbackToRemove;
         }
     }
 
     public static void AddTouchEndCallback(Action a_callbackToAdd)
     {
-        if (Instance != null)
+        if (s_instance != null)
         {
-            Instance.m_onTouchEnd += a_callbackToAdd;
+            s_instance.m_onTouchEnd += a_callbackToAdd;
         }
     }
     public static void RemoveTouchEndCallback(Action a_callbackToRemove)
     {
-        if (Instance != null)
+        if (s_instance != null)
         {
-            Instance.m_onTouchEnd -= a_callbackToRemove;
+            s_instance.m_onTouchEnd -= a_callbackToRemove;
         }
     }
 }
