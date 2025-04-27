@@ -5,14 +5,14 @@ using UnityEngine;
 public class TrayMover : MonoBehaviour
 {
     [SerializeField]
-    Camera m_camera;
-    [SerializeField]
     LayerMask m_trayLayer;
 
+    Camera m_camera;
     private Imovable m_movableTray = null;
 
     private void Start()
     {
+        m_camera = GameManager.GetCamera;
         InputManager.AddTouchStartCallback(OnTouchStart);
         InputManager.AddTouchEndCallback(OnTouchEnd);
     }
@@ -30,13 +30,11 @@ public class TrayMover : MonoBehaviour
     }
     private void OnTouchStart()
     {
-        Debug.Log("Touch Started");
         //InputManager.TouchPosition
         if (Physics.Raycast(m_camera.ScreenPointToRay(InputManager.TouchPosition), out RaycastHit l_hitInfo, Mathf.Infinity, m_trayLayer))
         {
             m_movableTray = l_hitInfo.transform.GetComponent<Imovable>();
-            if (m_movableTray == null) Debug.Log("Tray is null");
-            Debug.Log(((Tray)m_movableTray).gameObject.name);
+            //if (m_movableTray == null) Debug.Log("Tray is null");
             m_movableTray.MovementToggle(true);
             // Experimental
             //m_movableTray.MoveToPosition(Vector3.forward * 5);
@@ -45,7 +43,6 @@ public class TrayMover : MonoBehaviour
     }
     private void OnTouchEnd()
     {
-        Debug.Log("Touch ended");
         if (m_movableTray != null)
         {
             m_movableTray.MovementToggle(false);
